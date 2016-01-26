@@ -1,36 +1,35 @@
 <div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}", name: "Phoenix!" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+  <h2>LumPatterns CSV to LSE Map Converter</h2>
 </div>
 
 <div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="http://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
-  </div>
+  <p>CSV files must have a first row that contains column headers.<br/>
+  There should be seven columns: <b>Node Name</b>, <b>Panel X</b>, <b>Panel Y</b>, <b>Install X</b>,
+  <b>Install Y</b>, <b>Supply Number</b>, <b>Port Number</b>.<br />
+  The <b>Node Name</b> should be formatted to contain the per-string node number between a <b><var>:</var></b> and a <b><var>(</var></b><br />
+  <var>000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:1(000822263822881.par)</var><br />
+  <br />
+  Sample CSV file:
+  <pre class="pre-scrollable">
+Name of Node,X-Coordinate within a panel,Y-Coordinate within a panel,X-Coordinate within the total installation,Y-Coordinate within the total installation,Supply Number,Port Number<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:1(000822263822881.par),1287.5,27.5,10,10,1,1<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:2(000822263822881.par),1227.5,27.5,10,20,1,1<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:1(000822263822881.par),1167.5,27.5,20,10,1,2<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:2(000822263822881.par),1107.5,27.5,20,20,1,2<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:1(000822263822881.par),1047.5,27.5,30,10,2,1<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:2(000822263822881.par),987.5,27.5,30,20,2,1<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:1(000822263822881.par),867.5,27.5,40,10,2,2<br />
+000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:2(000822263822881.par),747.5,27.5,40,20,2,2<br />
+  </pre>
+  </p>
 
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
-  </div>
-</div>
+  <%= form_for @conn, "/", [multipart: true, as: "form"], fn f -> %>
+    <div class="form-group">
+      <label>CSV File</label>
+      <%= file_input f, :csv, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
