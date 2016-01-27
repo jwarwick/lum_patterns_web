@@ -5,7 +5,7 @@ defmodule LumPatternsWeb.PageController do
     render conn, "index.html"
   end
 
-  def create(conn, params = %{"form" => %{"csv" => %Plug.Upload{filename: filename, path: path}}}) do
+  def create(conn, %{"form" => %{"csv" => %Plug.Upload{filename: filename, path: path}}}) do
     tmp_dir = System.tmp_dir!
     tmp_file = Path.rootname(filename) <> ".map"
     tmp_path = Path.join(tmp_dir, tmp_file)
