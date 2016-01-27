@@ -2,7 +2,19 @@
   <h2>LumPatterns CSV to LSE Map Converter</h2>
 </div>
 
-<div class="row marketing">
+  <%= form_for @conn, "/", [multipart: true, as: "form"], fn f -> %>
+    <div class="form-group">
+      <label>CSV File</label>
+      <%= file_input f, :csv, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+<div class="row">
+  <h3>File Format</h3>
   <p>CSV files must have a first row that contains column headers.<br/>
   There should be seven columns: <b>Node Name</b>, <b>Panel X</b>, <b>Panel Y</b>, <b>Install X</b>,
   <b>Install Y</b>, <b>Supply Number</b>, <b>Port Number</b>.<br />
@@ -22,14 +34,5 @@ Name of Node,X-Coordinate within a panel,Y-Coordinate within a panel,X-Coordinat
 000822263822881/A-P71-100-150107 LP-ROUND-ASSY > Teamcenter Status:2(000822263822881.par),747.5,27.5,40,20,2,2<br />
   </pre>
   </p>
+</div>
 
-  <%= form_for @conn, "/", [multipart: true, as: "form"], fn f -> %>
-    <div class="form-group">
-      <label>CSV File</label>
-      <%= file_input f, :csv, class: "form-control" %>
-    </div>
-
-    <div class="form-group">
-      <%= submit "Submit", class: "btn btn-primary" %>
-    </div>
-  <% end %>
